@@ -3,7 +3,7 @@ import { HomeScreen } from "../screens/home/HomeScreen";
 import { PokemonScreen } from "../screens/pokemon/PokemonScreen";
 import { SearchScreen } from "../screens/search/SearchScreen";
 
-type RootStackParamList = {
+export type RootStackParamList = {
     Home:undefined;
     Pokemon:{pokemonId:number};
     Search:undefined;

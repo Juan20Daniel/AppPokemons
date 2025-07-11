@@ -14,7 +14,21 @@ export class PokemonMapper {
             avatar: avatar,
             sprites: sprites,
             name: pokemon.name,
-            color: color
+            color: color,
+
+            games: pokemon.game_indices.map(game => game.version.name),
+            stats: pokemon.stats.map(({base_stat, stat}) => {
+                return {name:stat.name, value:base_stat}
+            }),
+            abilities: pokemon.abilities
+                .map(({ability}) => ability?.name)
+                .filter(habilitie => habilitie != null), 
+            movies: pokemon.moves.map(({move, version_group_details}) => {
+                return {
+                    name:move.name, 
+                    lavel:version_group_details.shift()!.level_learned_at
+                }
+            })
         }
     }
     static getSprites(data: PokemonApiResponse): string[] {

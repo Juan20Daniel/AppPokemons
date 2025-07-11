@@ -6,5 +6,20 @@ export interface Pokemon {
     sprites: string[];
 
     //todo
-    color:string
+    color:string;
+
+    games: string[];
+    stats: Stat[];
+    abilities: string[];
+    movies: Move[];
+}
+
+export interface Stat {
+    name: string;
+    value: number;
+}
+
+export interface Move {
+    name: string;
+    lavel: number;
 }
