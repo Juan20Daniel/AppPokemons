@@ -1,6 +1,7 @@
 import { getColorFromImage } from "../../config/helpers/get-color";
-import type { Pokemon } from "../../domain/entities/pokemon";
+import type { Pokemon, PokemonWithNameAndId } from "../../domain/entities/pokemon";
 import type { PokemonApiResponse } from "../interfaces/pokemonApiResponse.interface";
+import { PokemonApi } from "../interfaces/pokemonsApiResponse.interfaces";
 
 export class PokemonMapper {
     static async fromPokeApiToEntity(pokemon:PokemonApiResponse):Promise<Pokemon> {
@@ -51,5 +52,15 @@ export class PokemonMapper {
             sprites.push(data.sprites.other?.showdown.back_default);
 
         return sprites;
+    }
+    static fromPokeApiWithNameAndIdToEntity(pokemon:PokemonApi): PokemonWithNameAndId {
+        return {
+            id: this.getPokemonId(pokemon.url),
+            name:pokemon.name,
+        }
+    } 
+    static getPokemonId(url:string): number {
+        const id = url.split('/').splice(-2).shift();
+        return +id!
     }
 }

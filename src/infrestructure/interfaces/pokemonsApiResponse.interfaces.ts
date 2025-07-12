@@ -2,10 +2,10 @@ export interface PokemonsApiResponse {
     count:    number;
     next:     string;
     previous: null;
-    results:  Result[];
+    results:  PokemonApi[];
 }
 
-export interface Result {
+export interface PokemonApi {
     name: string;
     url:  string;
 }

@@ -1,16 +1,20 @@
 import { FlatList, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Text } from 'react-native-paper';
+import { FAB, Text, useTheme } from 'react-native-paper';
 import { getPokemons } from '../../../actions/pokemons';
 import { PokeballBg } from '../../components/ui';
 import { globalTheme } from '../../../config/theme/global-theme';
-import { PokemonCard } from '../../components/pokemons';
+import { FlatListPokemons } from '../../components/pokemons';
+import { RootStackParamList } from '../../navigators/StackNavigator';
+import { StackScreenProps } from '@react-navigation/stack';
 
-export const HomeScreen = () => {
+interface Props extends StackScreenProps<RootStackParamList, 'Home'>{}
+
+export const HomeScreen = ({ navigation }:Props) => {
     const { top } = useSafeAreaInsets();
     const height = useWindowDimensions().height;
-
+    const theme = useTheme();
     const queryClient = useQueryClient();
     // const { isLoading, data:pokemons=[] } = useQuery({ 
     //     queryKey: ['pokemons'], 
@@ -36,18 +40,17 @@ export const HomeScreen = () => {
     return (
         <View style={{ height:height-20, ...globalTheme.globalMargin, paddingTop:top,}}>
             <PokeballBg customStyle={styles.pokeballImg} />
-            <FlatList 
+            <FlatListPokemons 
                 data={data?.pages.flat()??[]}
-                renderItem={({item}) => <PokemonCard pokemon={item} />}
-                keyExtractor={(pokemon, index) => pokemon.id.toString()+index}
-                numColumns={2}
-                style={{marginBottom:30}}
-                showsVerticalScrollIndicator={false}
-                ListHeaderComponent={() => (
-                    <Text variant="displayMedium">Pokedex</Text>
-                )}
-                onEndReachedThreshold={0.6}
-                onEndReached={() => fetchNextPage()}
+                ListHeaderComponent={<Text variant="displayMedium">Pokedex</Text>}
+                onEndReached={fetchNextPage}
+            />
+            <FAB 
+                label="Buscar"
+                style={[globalTheme.fab]}
+                mode='elevated'
+                color={theme.dark ? 'white' : 'black'}
+                onPress={() => navigation.push('Search')}
             />
         </View>
     );

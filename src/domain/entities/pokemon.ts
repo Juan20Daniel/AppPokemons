@@ -23,3 +23,10 @@ export interface Move {
     name: string;
     lavel: number;
 }
+
+//Pokemon with name and id
+
+export interface PokemonWithNameAndId {
+    id:number;
+    name: string;
+}
