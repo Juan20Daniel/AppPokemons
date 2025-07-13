@@ -6,7 +6,7 @@ import { PokemonMapper } from "../../infrestructure/mappers/pokemon.mapper";
 export const getAllPokemons = async (): Promise<PokemonWithNameAndId[]> => {
     try {
         const {data} = await pokeApi.get<PokemonsApiResponse>('/pokemon?offset=0&limit=1000');
-
+        console.log('peticion')
         return data.results.map(pokemon => {
             return PokemonMapper.fromPokeApiWithNameAndIdToEntity(pokemon);
         });

@@ -5,10 +5,11 @@ import { PokemonCard } from './PokemonCard';
 interface Props {
     data: Array<any>;
     ListHeaderComponent?: React.ReactNode;
+    ListFooterComponent?:React.ReactNode;
     onEndReached?: () => void;
 }
 
-export const FlatListPokemons = ({data, ListHeaderComponent, onEndReached}:Props) => {
+export const FlatListPokemons = ({data, ListHeaderComponent, ListFooterComponent, onEndReached}:Props) => {
     return (
         <FlatList
             data={data}
@@ -20,6 +21,9 @@ export const FlatListPokemons = ({data, ListHeaderComponent, onEndReached}:Props
             ListHeaderComponent={() => (
                 <>{ListHeaderComponent}</>
             )}
+            ListFooterComponent={
+                <>{ListFooterComponent}</>
+            }
             onEndReachedThreshold={0.6}
             onEndReached={() => {
                 if(onEndReached) onEndReached();
